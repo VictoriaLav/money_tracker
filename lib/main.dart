@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<LoginBloc>(
           create: (_) => LoginBloc(
-            loginRepository: LoginRepository(),
+            loginRepository: LoginRepository(firebase: FirebaseAuth.instance),
           ),
         ),
         BlocProvider<FormTypeBloc>(
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomePage();
             } else if (snapshot.connectionState == ConnectionState.active) {
-              return const LoginPage();
+              return LoginPage();
             } else {
               return const SizedBox.shrink();
             }

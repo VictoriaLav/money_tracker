@@ -6,5 +6,5 @@ void main() {
   app.main();
 }
 
-//flutter drive --target=test/app.dart
+//flutter drive --target=test_driver/app.dart
 

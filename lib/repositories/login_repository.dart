@@ -1,14 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginRepository {
-  final _firebase = FirebaseAuth.instance;
+  LoginRepository({required this.firebase});
+  final FirebaseAuth firebase;
 
   Future<void> signIn({
     required String email,
     required String password
   }) async {
     try {
-      await _firebase.signInWithEmailAndPassword(email: email, password: password);
+      await firebase.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         throw 'Такой пользователь не зарегистрирован!';
@@ -23,7 +24,7 @@ class LoginRepository {
     required String password
   }) async {
     try {
-      await _firebase.createUserWithEmailAndPassword(email: email, password: password);
+      await firebase.createUserWithEmailAndPassword(email: email, password: password);
       throw 'Новый пользователь зарегистрирован!';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
@@ -35,6 +36,6 @@ class LoginRepository {
   }
 
   Future<void> signOut() async {
-    await _firebase.signOut();
+    await firebase.signOut();
   }
 }

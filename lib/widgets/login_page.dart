@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                                         : 'Еще нет аккаунта? ',
                                   ),
                                   TextButton(
-                                    key: const Key('fieldSignInOrSignUp'),
+                                    key: const Key('buttonSignInOrSignUp'),
                                     onPressed: () {
                                       BlocProvider.of<FormTypeBloc>(context).add(
                                         FormTypeRequested(state is SignIn
