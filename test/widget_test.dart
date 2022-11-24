@@ -1,142 +1,79 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:money_tracker/blocs/formtype_bloc.dart';
 import 'package:money_tracker/blocs/login_bloc.dart';
-
 import 'package:money_tracker/repositories/login_repository.dart';
 import 'package:money_tracker/widgets/login_page.dart';
 
-void main() {
+void main() async {
+  final _firebase = MockFirebaseAuth();
 
-  group('LoginPage SignIn tests', () {
+  var widgetLogin = MultiBlocProvider(
+    providers: [
+      BlocProvider<LoginBloc>(
+        create: (_) =>
+            LoginBloc(
+              loginRepository: LoginRepository(firebase: _firebase),
+            ),
+      ),
+      BlocProvider<FormTypeBloc>(
+        create: (_) => FormTypeBloc(),
+      ),
+    ],
+    child: const MaterialApp(
+      home: LoginPage(),
+    ),
+  );
 
-    // testWidgets("test Firebase", (WidgetTester tester) async {
-    //   WidgetsFlutterBinding.ensureInitialized();
-    //   await Firebase.initializeApp();
-    // });
-    //
-    // testWidgets("test description", (WidgetTester tester) async {
-    //   WidgetsFlutterBinding.ensureInitialized();
-    //   // await Firebase.initializeApp();
-    //
-    //   await tester.pumpWidget(MultiBlocProvider(
-    //     providers: [
-    //       BlocProvider<LoginBloc>(
-    //         create: (_) => LoginBloc(
-    //           loginRepository: LoginRepository(),
-    //         ),
-    //       ),
-    //     ],
-    //     child: MaterialApp(
-    //       home: FutureBuilder(
-    //           future: Firebase.initializeApp(),
-    //           builder: (context, snapshot) {
-    //             if (snapshot.connectionState == ConnectionState.done) {
-    //               return const LoginPage();
-    //             } else {
-    //               return const SizedBox.shrink();
-    //             }
-    //           }),
-    //     ),
-    //   ));
+  var emailField = find.byKey(const Key('fieldEmail'));
+  var passwordField = find.byKey(const Key('fieldPassword'));
+  var loginButton = find.byKey(const Key('buttonLogin'));
+  var signInOrSignUpButton = find.byKey(const Key('buttonSignInOrSignUp'));
 
-      // await tester.enterText(find.byKey(const Key('fieldEmail')), 'test@test.com');
-      //   expect(find.text('test@test.com'), findsOneWidget);
 
-      // // Нужно проверить, что в поле phone введены только цифры.
-      // await tester.enterText(find.byKey(const Key('fieldPhone')), '8008800');
-      // expect(find.text('8008800'), findsOneWidget);
-      //
-      // // При клике на кнопку «Отправить» нужно убедиться,
-      // // что на экране появилась надпись «Добро пожаловать».
-      // await tester.tap(find.byKey(const Key('button1')));
-      // await tester.pump();
-      // expect(find.text('Добро пожаловать'), findsOneWidget);
+  group('LoginPage test', () {
 
-    // });
+    testWidgets("email, password and button are found", (WidgetTester tester) async {
+      await tester.pumpWidget(widgetLogin);
 
-    // testWidgets("test description", (WidgetTester tester) async {
-    //   WidgetsFlutterBinding.ensureInitialized();
-    //   await Firebase.initializeApp();
-    //
-    //   await tester.pumpWidget(
-    //     //   MultiBlocProvider(
-    //     // providers: [
-    //     //   BlocProvider<LoginBloc>(
-    //     //     create: (_) => LoginBloc(
-    //     //       loginRepository: LoginRepository(),
-    //     //     ),
-    //     //   ),
-    //     // ],
-    //     // child:
-    //     const MaterialApp(
-    //       localizationsDelegates: [
-    //         GlobalMaterialLocalizations.delegate,
-    //         GlobalCupertinoLocalizations.delegate,
-    //         GlobalWidgetsLocalizations.delegate,
-    //       ],
-    //       home: LoginPage(),
-    //     // ),
-    //   ));
-    //
-    //   await tester.enterText(find.byKey(const Key('fieldEmail')), 'test@test1.com');
-    //   expect(find.text('test@test.com'), findsOneWidget);
-    //
-    //   await tester.enterText(find.byKey(const Key('fieldPassword')), '12345678');
-    //   expect(find.text('12345678'), findsOneWidget);
-    //
-    //   await tester.tap(find.byKey(const Key('buttonLogin')));
-    //   await tester.pump();
-    //   // expect(find.text('Добро пожаловать'), findsOneWidget);
-    //
-    // });
+      expect(emailField, findsOneWidget);
+      expect(passwordField, findsOneWidget);
+      expect(loginButton, findsOneWidget);
+
+    });
+
+    testWidgets("validates empty email and password", (WidgetTester tester) async {
+      await tester.pumpWidget(widgetLogin);
+
+      await tester.tap(loginButton);
+      await tester.pump();
+      expect(find.text('Введите e-mail'), findsOneWidget);
+      expect(find.text('Введите пароль'), findsOneWidget);
+
+    });
+
+    testWidgets("validates incorrect email", (WidgetTester tester) async {
+      await tester.pumpWidget(widgetLogin);
+
+      await tester.enterText(emailField, '123');
+      await tester.tap(loginButton);
+      await tester.pump();
+      expect(find.text('Поле e-mail заполнено не корректно'), findsOneWidget);
+
+    });
+
+    testWidgets("toggle form type SignIn or SignUp", (WidgetTester tester) async {
+      await tester.pumpWidget(widgetLogin);
+
+      expect(find.text('Войти'), findsOneWidget);
+      await tester.tap(signInOrSignUpButton);
+      await tester.pump();
+      expect(find.text('Регистрация'), findsOneWidget);
+
+    });
+
   });
 
-  // group('LoginPage SignUp tests', () {
-  //
-  //   testWidgets("test description", (WidgetTester tester) async {
-  //     WidgetsFlutterBinding.ensureInitialized();
-  //     await Firebase.initializeApp();
-  //
-  //     await tester.pumpWidget(MultiBlocProvider(
-  //       providers: [
-  //         BlocProvider<LoginBloc>(
-  //           create: (_) => LoginBloc(
-  //             loginRepository: LoginRepository(),
-  //           ),
-  //         ),
-  //       ],
-  //       child: const MaterialApp(
-  //         localizationsDelegates: [
-  //           GlobalMaterialLocalizations.delegate,
-  //           GlobalCupertinoLocalizations.delegate,
-  //           GlobalWidgetsLocalizations.delegate,
-  //         ],
-  //         home: LoginPage(),
-  //       ),
-  //     ));
-  //
-  //     await tester.tap(find.byKey(const Key('fieldSignInOrSignUp')));
-  //     await tester.pump();
-  //
-  //     await tester.enterText(find.byKey(const Key('fieldEmail')), 'test@test1.com');
-  //     expect(find.text('test@test.com'), findsOneWidget);
-  //
-  //     await tester.enterText(find.byKey(const Key('fieldPassword')), '12345678');
-  //     expect(find.text('12345678'), findsOneWidget);
-  //
-  //     await tester.tap(find.byKey(const Key('buttonLogin')));
-  //     await tester.pump();
-  //     // expect(find.text('Вы успешно зарегистрировались'), findsOneWidget);
-  //
-  //   });
-  // });
 }
