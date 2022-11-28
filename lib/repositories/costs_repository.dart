@@ -98,6 +98,7 @@ class CostsRepository {
       'date': date,
       'user': FirebaseAuth.instance.currentUser!.uid,
       'category': category.reference,
+      'isDelete': false,
     });
   }
 
