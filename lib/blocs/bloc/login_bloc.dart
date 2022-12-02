@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../models/exception_login.dart';
 import '../../repositories/login_repository.dart';
 import '../events/login_event.dart';
 import '../states/login_state.dart';
@@ -15,7 +16,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             email: event.email, password: event.password);
         emit(Authenticated());
       } catch (e) {
-        emit(LoginError(e.toString()));
+        emit(LoginError(e is ExceptionLogin ? e : ExceptionLogin('')));
         emit(UnAuthenticated());
       }
     });
@@ -26,7 +27,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             email: event.email, password: event.password);
         emit(Authenticated());
       } catch (e) {
-        emit(LoginError(e.toString()));
+        emit(LoginError(e is ExceptionLogin ? e : ExceptionLogin('')));
         emit(UnAuthenticated());
       }
     });

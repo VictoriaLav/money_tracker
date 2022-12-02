@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:money_tracker/models/exception_login.dart';
 
 class LoginRepository {
   LoginRepository({required this.firebase});
@@ -12,9 +13,9 @@ class LoginRepository {
       await firebase.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        throw 'Такой пользователь не зарегистрирован!';
+        throw ExceptionLogin('Такой пользователь не зарегистрирован!');
       } else if (e.code == 'wrong-password') {
-        throw 'Неправильный пароль!';
+        throw ExceptionLogin('Неправильный пароль!');
       }
     }
   }
@@ -28,9 +29,9 @@ class LoginRepository {
       throw 'Новый пользователь зарегистрирован!';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        throw 'Такой e-mail уже зарегистрирован!';
+        throw ExceptionLogin('Такой e-mail уже зарегистрирован!');
       } else if (e.code == 'weak-password') {
-        throw 'Пароль должен быть не менее 6 символов!';
+        throw ExceptionLogin('Пароль должен быть не менее 6 символов!');
       }
     }
   }

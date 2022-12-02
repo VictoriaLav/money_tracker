@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
           if (state is LoginError) {
             ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.error),
+                  content: Text(state.error.name),
                   backgroundColor: customColorViolet,
                 )
             );

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:money_tracker/models/exception_login.dart';
 
 @immutable
 abstract class LoginState extends Equatable {}
@@ -20,7 +21,7 @@ class UnAuthenticated extends LoginState {
 }
 
 class LoginError extends LoginState {
-  final String error;
+  final ExceptionLogin error;
 
   LoginError(this.error);
 
