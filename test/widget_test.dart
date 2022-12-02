@@ -2,8 +2,8 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:money_tracker/blocs/formtype_bloc.dart';
-import 'package:money_tracker/blocs/login_bloc.dart';
+import 'package:money_tracker/blocs/bloc/formtype_bloc.dart';
+import 'package:money_tracker/blocs/bloc/login_bloc.dart';
 import 'package:money_tracker/repositories/login_repository.dart';
 import 'package:money_tracker/widgets/login_page.dart';
 
@@ -41,7 +41,6 @@ void main() async {
       expect(emailField, findsOneWidget);
       expect(passwordField, findsOneWidget);
       expect(loginButton, findsOneWidget);
-
     });
 
     testWidgets("validates empty email and password", (WidgetTester tester) async {
@@ -51,7 +50,6 @@ void main() async {
       await tester.pump();
       expect(find.text('Введите e-mail'), findsOneWidget);
       expect(find.text('Введите пароль'), findsOneWidget);
-
     });
 
     testWidgets("validates incorrect email", (WidgetTester tester) async {
@@ -61,7 +59,6 @@ void main() async {
       await tester.tap(loginButton);
       await tester.pump();
       expect(find.text('Поле e-mail заполнено не корректно'), findsOneWidget);
-
     });
 
     testWidgets("toggle form type SignIn or SignUp", (WidgetTester tester) async {
@@ -71,7 +68,6 @@ void main() async {
       await tester.tap(signInOrSignUpButton);
       await tester.pump();
       expect(find.text('Регистрация'), findsOneWidget);
-
     });
 
   });

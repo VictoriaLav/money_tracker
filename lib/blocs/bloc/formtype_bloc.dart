@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/form_type.dart';
-import '../models/states/formtype_state.dart';
-import 'events/formtype_event.dart';
+import '../../models/form_type.dart';
+import '../events/form_type_event.dart';
+import '../states/form_type_state.dart';
 
 class FormTypeBloc extends Bloc<FormTypeEvent, FormTypeState> {
   FormTypeBloc() : super(SignIn()) {

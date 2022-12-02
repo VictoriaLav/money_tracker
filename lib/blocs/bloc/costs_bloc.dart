@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/states/costs_state.dart';
-import '../repositories/costs_repository.dart';
-import 'events/costs_event.dart';
+import '../states/costs_state.dart';
+import '../../repositories/costs_repository.dart';
+import '../events/costs_event.dart';
 
 class CostsBloc extends Bloc<CostsEvent, CostsState> {
   final CostsRepository costsRepository;
@@ -64,6 +64,7 @@ class CostsBloc extends Bloc<CostsEvent, CostsState> {
     final date = await costsRepository.loadDate();
     final categories = await costsRepository.loadCategories();
     final costs = await costsRepository.loadCosts();
+
     emit(CostsState(
         date: date, categories: categories, costs: costs, isLoading: true));
   }

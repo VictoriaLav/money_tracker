@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
+import '../blocs/states/costs_state.dart';
 import '../models/category.dart';
 import '../models/cost.dart';
-import '../models/states/costs_state.dart';
 import '../styles/colors.dart';
 import 'loading_indicator.dart';
 import 'cost_card.dart';

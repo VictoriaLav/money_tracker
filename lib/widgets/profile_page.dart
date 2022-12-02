@@ -8,9 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../blocs/events/login_event.dart';
 import '../blocs/events/profile_event.dart';
-import '../blocs/login_bloc.dart';
-import '../blocs/profile_bloc.dart';
-import '../models/states/profile_state.dart';
+import '../blocs/bloc/login_bloc.dart';
+import '../blocs/bloc/profile_bloc.dart';
+import '../blocs/states/profile_state.dart';
 import '../styles/colors.dart';
 import '../styles/consts.dart';
 import 'loading_indicator.dart';

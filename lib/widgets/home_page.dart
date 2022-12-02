@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/tab_event.dart';
-import '../blocs/profile_bloc.dart';
-import '../models/states/costs_state.dart';
-import '../models/states/profile_state.dart';
+import '../blocs/bloc/profile_bloc.dart';
+import '../blocs/states/costs_state.dart';
+import '../blocs/states/profile_state.dart';
+import '../blocs/states/tab_state.dart';
 import 'costs_page.dart';
 import 'profile_page.dart';
-import '../blocs/tab_bloc.dart';
+import '../blocs/bloc/tab_bloc.dart';
 import '../models/app_tab.dart';
-import '../models/states/tab_state.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage();
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

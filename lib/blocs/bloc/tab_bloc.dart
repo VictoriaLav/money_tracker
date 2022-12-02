@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/app_tab.dart';
-import '../models/states/tab_state.dart';
-import 'events/tab_event.dart';
+import '../../models/app_tab.dart';
+import '../events/tab_event.dart';
+import '../states/tab_state.dart';
 
 class TabBloc extends Bloc<TabEvent, TabState> {
   TabBloc() : super(const TabState(activeTab: AppTab.costs)) {

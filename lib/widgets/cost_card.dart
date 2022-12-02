@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/costs_event.dart';
+import '../blocs/states/costs_state.dart';
 import '../models/cost.dart';
-import '../models/states/costs_state.dart';
 import '../styles/colors.dart';
 
 class CostCard extends StatelessWidget {

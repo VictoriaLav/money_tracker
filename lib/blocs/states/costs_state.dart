@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
-import '../category.dart';
-import '../cost.dart';
+import '../../models/category.dart';
+import '../../models/cost.dart';
 
 @immutable
 class CostsState extends Equatable {

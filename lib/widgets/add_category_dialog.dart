@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/costs_event.dart';
 import '../styles/colors.dart';
 

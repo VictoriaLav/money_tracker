@@ -1,15 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/events/formtype_event.dart';
+import '../blocs/events/form_type_event.dart';
 import '../blocs/events/login_event.dart';
-import '../blocs/formtype_bloc.dart';
-import '../blocs/login_bloc.dart';
+import '../blocs/bloc/formtype_bloc.dart';
+import '../blocs/bloc/login_bloc.dart';
+import '../blocs/states/form_type_state.dart';
+import '../blocs/states/login_state.dart';
 import '../models/form_type.dart';
-import '../models/states/formtype_state.dart';
-import '../models/states/login_state.dart';
 import '../styles/consts.dart';
 import '../styles/colors.dart';
 import '../widgets/loading_indicator.dart';

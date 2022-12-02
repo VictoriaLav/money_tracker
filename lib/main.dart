@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'blocs/costs_bloc.dart';
-import 'blocs/formtype_bloc.dart';
-import 'blocs/profile_bloc.dart';
+import 'blocs/bloc/costs_bloc.dart';
+import 'blocs/bloc/formtype_bloc.dart';
+import 'blocs/bloc/profile_bloc.dart';
 import 'repositories/costs_repository.dart';
 import 'repositories/login_repository.dart';
-import 'blocs/login_bloc.dart';
-import 'blocs/tab_bloc.dart';
+import 'blocs/bloc/login_bloc.dart';
+import 'blocs/bloc/tab_bloc.dart';
 import 'widgets/home_page.dart';
 import 'widgets/login_page.dart';
 import 'styles/colors.dart';
@@ -64,9 +64,9 @@ class MyApp extends StatelessWidget {
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return HomePage();
+              return const HomePage();
             } else if (snapshot.connectionState == ConnectionState.active) {
-              return LoginPage();
+              return const LoginPage();
             } else {
               return const SizedBox.shrink();
             }

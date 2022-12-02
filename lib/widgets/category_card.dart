@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/costs_event.dart';
+import '../blocs/states/costs_state.dart';
 import '../models/category.dart';
 import '../models/cost.dart';
-import '../models/states/costs_state.dart';
 import 'detail_category_page.dart';
 import '../styles/colors.dart';
 import 'add_cost_dialog.dart';
@@ -62,7 +62,7 @@ class CategoryCard extends StatelessWidget {
                 ),
                 subtitle: BlocBuilder<CostsBloc, CostsState>(
                     builder: (context, state) {
-                  return CategoryTotal(state.costs, category);
+                  return categoryTotal(state.costs, category);
                 }),
                 trailing: IconButton(
                   color: customColorBlack,
@@ -182,7 +182,7 @@ class CategoryCard extends StatelessWidget {
     });
   }
 
-  Widget CategoryTotal(List<Cost> costs, Category category) {
+  Widget categoryTotal(List<Cost> costs, Category category) {
     List<Cost> list = loadCostsOneCategory(costs, category);
 
     double sum = 0;

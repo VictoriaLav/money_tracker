@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'events/profile_event.dart';
-import '../models/states/profile_state.dart';
+import '../events/profile_event.dart';
+import '../states/profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc():super(const ProfileState(isSave: false, isLoading: false, imageFile: '')) {

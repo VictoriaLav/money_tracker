@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:mat_month_picker_dialog/mat_month_picker_dialog.dart';
 
-import '../blocs/costs_bloc.dart';
+import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/costs_event.dart';
+import '../blocs/states/costs_state.dart';
 import '../models/category.dart';
 import '../models/cost.dart';
-import '../models/states/costs_state.dart';
 import '../styles/colors.dart';
 import '../styles/consts.dart';
 import 'add_category_dialog.dart';
