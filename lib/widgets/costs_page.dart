@@ -9,6 +9,7 @@ import '../blocs/events/costs_event.dart';
 import '../blocs/states/costs_state.dart';
 import '../models/category.dart';
 import '../models/cost.dart';
+import '../models/hex_color.dart';
 import '../styles/colors.dart';
 import '../styles/consts.dart';
 import 'add_category_dialog.dart';
@@ -134,7 +135,7 @@ class CostsPage extends StatelessWidget {
           index++;
           final value = PieChartSectionData(
             radius: 60,
-            color: fromHex(category.color),
+            color: HexColor.fromHex(category.color),
             value: sum,
             title: category.name,
             borderSide: const BorderSide(width: 0),

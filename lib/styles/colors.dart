@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:money_tracker/models/hex_color.dart';
 
-Color customColorViolet = fromHex('9053EB');
+Color customColorViolet = HexColor.fromHex('9053EB');
 Color customColorBlack = Colors.black;
 Color customColorWhite = Colors.white;
-Color customColorGrey = fromHex('D0D0D0');
+Color customColorGrey = HexColor.fromHex('D0D0D0');
+Color customColorDelete = HexColor.fromHex('F36969');
 
-Map<int, Color> paletteOfShades =
+const Map<int, Color> paletteOfShades =
 {
   50:Color.fromRGBO(158,158,158, .1),
   100:Color.fromRGBO(158,158,158, .2),
@@ -19,29 +21,4 @@ Map<int, Color> paletteOfShades =
   900:Color.fromRGBO(158,158,158, 1),
 };
 
-MaterialColor customMaterialColorViolet = MaterialColor(0xFF9053EB, paletteOfShades);
-
-int getCodeColor(String hexString) {
-  final buffer = StringBuffer();
-
-  int i = hexString.length;
-  while (i < 8) {
-    buffer.write('f');
-    i++;
-  }
-  buffer.write(hexString.replaceFirst('#', ''));
-  return int.parse(buffer.toString(), radix: 16);
-}
-
-Color fromHex(String hexString) {
-  return Color(getCodeColor(hexString));
-}
-
-bool checkColor(String colorCheck) {
-  try {
-    Color hexColor = fromHex(colorCheck);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
+MaterialColor customMaterialColorViolet = const MaterialColor(0xFF9053EB, paletteOfShades);

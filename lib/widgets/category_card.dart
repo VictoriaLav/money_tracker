@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/models/hex_color.dart';
 
 import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/events/costs_event.dart';
@@ -65,11 +66,9 @@ class CategoryCard extends StatelessWidget {
                   return categoryTotal(state.costs, category);
                 }),
                 trailing: IconButton(
-                  color: customColorBlack,
-                  iconSize: 30,
                   icon: Icon(
                     Icons.arrow_forward_ios,
-                    color: fromHex(category.color),
+                    color: HexColor.fromHex(category.color),
                     size: 25,
                   ),
                   onPressed: () {
@@ -162,7 +161,7 @@ class CategoryCard extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(80, 70),
-                  primary: fromHex('F36969'),
+                  primary: customColorDelete,
                   onPrimary: Colors.white,
                   textStyle: const TextStyle(
                     fontSize: 15.0,

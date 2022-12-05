@@ -5,6 +5,7 @@ import '../blocs/bloc/costs_bloc.dart';
 import '../blocs/states/costs_state.dart';
 import '../models/category.dart';
 import '../models/cost.dart';
+import '../models/hex_color.dart';
 import '../styles/colors.dart';
 import 'loading_indicator.dart';
 import 'cost_card.dart';
@@ -21,7 +22,7 @@ class DetailCategoryPage extends StatelessWidget {
       title: 'Final Project',
       theme: ThemeData(
         primarySwatch: MaterialColor(
-            getCodeColor(category.color), paletteOfShades
+            int.parse(HexColor.toHex(HexColor.fromHex(category.color)), radix: 16), paletteOfShades
         ),
       ),
       home: Scaffold(

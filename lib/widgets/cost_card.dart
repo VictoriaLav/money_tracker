@@ -107,7 +107,7 @@ class CostCard extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(80, 70),
-                  primary: fromHex('F36969'),
+                  primary: customColorDelete,
                   onPrimary: Colors.white,
                   textStyle: const TextStyle(
                     fontSize: 15.0,
