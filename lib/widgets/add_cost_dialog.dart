@@ -17,7 +17,9 @@ class AddCostDialog extends StatefulWidget {
 }
 
 class _AddCostDialogState extends State<AddCostDialog> {
-  Color labelColor = customColorGrey;
+  late final FocusNode focusCost = FocusNode()..addListener(() {
+    setState(() {});
+  });
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   late DateTime date;
   String? sum;
@@ -40,6 +42,12 @@ class _AddCostDialogState extends State<AddCostDialog> {
   void initState() {
     super.initState();
     date = DateTime.now();
+  }
+
+  @override
+  void dispose() {
+    focusCost.dispose();
+    super.dispose();
   }
 
   @override
@@ -68,36 +76,33 @@ class _AddCostDialogState extends State<AddCostDialog> {
             ),
           ),
           const SizedBox(height: 15),
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() => labelColor = hasFocus ? customColorViolet : customColorGrey);
+          TextFormField(
+            key: const Key('text1'),
+            validator: (value) {
+              sum = value;
+              if (value == '') return 'Введите сумму';
+              return null;
             },
-            child: TextFormField(
-              key: const Key('text1'),
-              validator: (value) {
-                sum = value;
-                if (value == '') return 'Введите сумму';
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: 'Введите сумму',
-                labelStyle: TextStyle(color: labelColor),
-                focusedBorder: styleBorderFocus,
-                enabledBorder: styleBorderEnable,
-              ),
-              keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: false),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
-                TextInputFormatter.withFunction((oldValue, newValue) {
-                  try {
-                    final text = newValue.text;
-                    if (text.isNotEmpty) double.parse(text);
-                    return newValue;
-                  } catch (e) {}
-                  return oldValue;
-                }),
-              ],
+            focusNode: focusCost,
+            decoration: InputDecoration(
+              labelText: 'Введите сумму',
+              labelStyle: TextStyle(color: focusCost.hasFocus ? customColorViolet : customColorGrey),
+              focusedBorder: styleBorderFocus,
+              enabledBorder: styleBorderEnable,
             ),
+            keyboardType: const TextInputType.numberWithOptions(
+                decimal: true, signed: false),
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                try {
+                  final text = newValue.text;
+                  if (text.isNotEmpty) double.parse(text);
+                  return newValue;
+                } catch (e) {}
+                return oldValue;
+              }),
+            ],
           ),
           const SizedBox(height: 25),
           ElevatedButton(

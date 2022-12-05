@@ -15,7 +15,9 @@ class AddCategoryDialog extends StatefulWidget {
 }
 
 class _AddCategoryDialogState extends State<AddCategoryDialog> {
-  Color labelColor1 = customColorGrey;
+  late final FocusNode focusText = FocusNode()..addListener(() {
+    setState(() {});
+  });
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   String? nameCategory;
@@ -34,28 +36,31 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   );
 
   @override
+  void dispose() {
+    focusText.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: formKey,
       child: Column(
         children: <Widget>[
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() => labelColor1 = hasFocus ? customColorViolet : customColorGrey);
+          TextFormField(
+            key: const Key('text1'),
+            validator: (value) {
+              nameCategory = value;
+              if (value == '') return 'Введите название';
+              return null;
             },
-            child: TextFormField(
-              key: const Key('text1'),
-              validator: (value) {
-                nameCategory = value;
-                if (value == '') return 'Введите название';
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: 'Название',
-                labelStyle: TextStyle(color: labelColor1),
-                focusedBorder: styleBorderFocus,
-                enabledBorder: styleBorderEnable,
-              ),
+            focusNode: focusText,
+            decoration: InputDecoration(
+              labelText: 'Название',
+              labelStyle: TextStyle(
+                  color: focusText.hasFocus ? customColorViolet : customColorGrey),
+              focusedBorder: styleBorderFocus,
+              enabledBorder: styleBorderEnable,
             ),
           ),
           Row(

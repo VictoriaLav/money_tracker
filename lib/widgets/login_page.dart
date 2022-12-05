@@ -24,8 +24,13 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  Color _labelColor1 = customColorGrey;
-  Color _labelColor2 = customColorGrey;
+  late final FocusNode focusEmail = FocusNode()..addListener(() {
+    setState(() {});
+  });
+  late final FocusNode focusPassword = FocusNode()..addListener(() {
+    setState(() {});
+  });
+
 
   final styleBorderFocus = UnderlineInputBorder(
     borderSide: BorderSide(
@@ -41,6 +46,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
+    focusEmail.dispose();
+    focusPassword.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -123,55 +130,47 @@ class _LoginPageState extends State<LoginPage> {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() => _labelColor1 = hasFocus ? customColorViolet : customColorGrey);
+          TextFormField(
+            key: const Key('fieldEmail'),
+            controller: _emailController,
+            validator: (value) {
+              if (value == '') return 'Введите e-mail';
+              if (!validateEmail(value ?? '')) {
+                return 'Поле e-mail заполнено не корректно';
+              }
+              return null;
             },
-            child: TextFormField(
-              key: const Key('fieldEmail'),
-              controller: _emailController,
-              validator: (value) {
-                if (value == '') return 'Введите e-mail';
-                if (!validateEmail(value ?? '')) {
-                  return 'Поле e-mail заполнено не корректно';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'E-mail',
-                labelStyle: TextStyle(color: _labelColor1),
-                focusedBorder: styleBorderFocus,
-                enabledBorder: styleBorderEnable,
-              ),
+            keyboardType: TextInputType.emailAddress,
+            focusNode: focusEmail,
+            decoration: InputDecoration(
+              labelText: 'E-mail',
+              labelStyle: TextStyle(
+                  color: focusEmail.hasFocus ? customColorViolet : customColorGrey),
+              focusedBorder: styleBorderFocus,
+              enabledBorder: styleBorderEnable,
             ),
           ),
-          Focus(
-            onFocusChange: (hasFocus) {
-              setState(() => _labelColor2 = hasFocus ? customColorViolet : customColorGrey);
+          TextFormField(
+            key: const Key('fieldPassword'),
+            controller: _passwordController,
+            validator: (value) {
+              if (value == '') return 'Введите пароль';
+              return null;
             },
-            child: TextFormField(
-              key: const Key('fieldPassword'),
-              controller: _passwordController,
-              validator: (value) {
-                if (value == '') return 'Введите пароль';
-                return null;
-              },
-              decoration: InputDecoration(
-                labelText: 'Пароль',
-                labelStyle: TextStyle(color: _labelColor2),
-                focusedBorder: styleBorderFocus,
-                enabledBorder: styleBorderEnable,
-              ),
-              obscureText: true,
+            focusNode: focusPassword,
+            decoration: InputDecoration(
+              labelText: 'Пароль',
+              labelStyle: TextStyle(
+                  color: focusPassword.hasFocus ? customColorViolet : customColorGrey),
+              focusedBorder: styleBorderFocus,
+              enabledBorder: styleBorderEnable,
             ),
+            obscureText: true,
           ),
           const SizedBox(height: 30),
-          BlocBuilder<LoginBloc, LoginState>(
-              builder: (context, state) {
-                return loginButton(state is Loading ? true : false, formType);
-              }
-          ),
+          BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+            return loginButton(state is Loading ? true : false, formType);
+          }),
         ],
       ),
     );
